@@ -6,6 +6,7 @@ import fortmatic from '@snapshot-labs/lock/connectors/fortmatic';
 import connectors from '@/helpers/connectors.json';
 import walletlink from '@snapshot-labs/lock/connectors/walletlink';
 import gnosis from '@snapshot-labs/lock/connectors/gnosis';
+import kaikas from '@OojuTeam/lock/connectors/kaikas';
 
 const options: any = { connectors: [] };
 const lockConnectors = {
@@ -16,6 +17,7 @@ const lockConnectors = {
   portis,
   fortmatic,
   gnosis,
+  kaikas,
   trezor: injected
 };
 
