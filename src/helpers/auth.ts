@@ -6,7 +6,34 @@ import fortmatic from '@snapshot-labs/lock/connectors/fortmatic';
 import connectors from '@/helpers/connectors.json';
 import walletlink from '@snapshot-labs/lock/connectors/walletlink';
 import gnosis from '@snapshot-labs/lock/connectors/gnosis';
-import kaikas from '@OojuTeam/lock/connectors/kaikas';
+import LockConnector from '@snapshot-labs/lock/src/connector';
+
+class KaikasConnector extends LockConnector {
+  async connect() {
+    let provider;
+    const klaytn = window.klaytn;
+    if (klaytn) {
+      provider = window.caver._provider;
+      try {
+        await klaytn.enable();
+      } catch (e) {
+        console.error(e);
+        if (e.code === 4001) return;
+      }
+    }
+    return provider;
+  }
+
+  async isLoggedIn() {
+    // @ts-ignore
+    const klaytn = window.klaytn;
+    if (!klaytn) return false;
+    if (klaytn.selectedAddress) return true;
+    await new Promise(r => setTimeout(r, 400));
+    return !!(klaytn.selectedAddress);
+  }
+}
+
 
 const options: any = { connectors: [] };
 const lockConnectors = {
@@ -17,11 +44,12 @@ const lockConnectors = {
   portis,
   fortmatic,
   gnosis,
-  kaikas,
+  kaikas: KaikasConnector
   trezor: injected
 };
 
 Object.entries(connectors).forEach((connector: any) => {
+  // TODO change this to accept Vue.js
   options.connectors.push({
     key: connector[0],
     connector: lockConnectors[connector[0]],
