@@ -34,6 +34,7 @@ class KaikasConnector extends LockConnector {
   }
 }
 
+
 const options: any = { connectors: [] };
 const lockConnectors = {
   injected,
@@ -43,8 +44,8 @@ const lockConnectors = {
   portis,
   fortmatic,
   gnosis,
-  trezor: injected,
   kaikas: KaikasConnector
+  trezor: injected
 };
 
 Object.entries(connectors).forEach((connector: any) => {
