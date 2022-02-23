@@ -44,7 +44,7 @@ const lockConnectors = {
   portis,
   fortmatic,
   gnosis,
-  kaikas: KaikasConnector
+  kaikas: KaikasConnector,
   trezor: injected
 };
 
